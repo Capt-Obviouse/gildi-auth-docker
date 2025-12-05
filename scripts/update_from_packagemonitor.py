@@ -22,7 +22,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 REQ_PATH = PROJECT_ROOT / "conf" / "requirements.txt"
-SERVICE_CLI = "allianceauth_cli"
+SERVICE_CLI = "aa_cli"
 
 
 def run(cmd, capture=False, allow_failure=False):
@@ -157,7 +157,7 @@ def main():
     run(["docker", "compose", "build"])
 
     print("Step 5: Bringing stack up with new images...")
-    run(["docker", "compose", "--env-file=.env", "up", "-d"])
+    run(["docker", "compose", "up", "-d"])
 
     print("Step 6: Running migrations...")
     run(
