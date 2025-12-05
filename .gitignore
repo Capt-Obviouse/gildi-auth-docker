@@ -1,3 +1,4 @@
 .env
 setup.sql
 mysql-data/*
+.claude/settings.local.json
