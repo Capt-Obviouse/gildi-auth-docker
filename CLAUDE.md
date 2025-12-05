@@ -2,6 +2,17 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Rules
+
+### Changelog
+
+When making changes to this project, always update `CHANGELOG.md` following the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format:
+
+- Add entries under the `[Unreleased]` section
+- Use the appropriate category: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, or `Security`
+- Write entries for humans, not machines - be clear and concise
+- Group similar changes together
+
 ## Project Overview
 
 This is a Docker-based deployment of [Alliance Auth](https://allianceauth.org/), an authentication and management system for EVE Online corporations and alliances. The deployment uses a custom Docker image that extends the official Alliance Auth image with additional community plugins.
