@@ -283,7 +283,13 @@ KILLTRACKER_QUEUE_ID = "GILDI2750"  # Put your unique queue ID here
 
 SHELL_PLUS = "ipython"
 HEALTH_TOKEN = env('HEALTH_TOKEN')
-LOGGING['handlers']['log_file']['level'] = os.environ.get('AA_LOG_LEVEL', 'INFO')
+
+# Set log levels from environment variable
+AA_LOG_LEVEL = os.environ.get('AA_LOG_LEVEL', 'INFO')
+LOGGING['handlers']['log_file']['level'] = AA_LOG_LEVEL
+LOGGING['handlers']['console']['level'] = AA_LOG_LEVEL
+# Set root logger level to control all loggers
+LOGGING['root'] = {'handlers': ['console'], 'level': AA_LOG_LEVEL}
 
 
 # Temp Fix
