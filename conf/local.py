@@ -180,14 +180,14 @@ DISCORD_BOT_ADM_SYSTEMS = [30004576] # Jita Example
 DISCORD_BOT_ADM_CONSTELLATIONS = [20000668] # Kimitoro Example
 
 LOGGING['handlers']['bot_log_file']= {
-    'level': 'DEBUG',
+    'level': os.environ.get('AA_LOG_LEVEL', 'INFO'),
     'class': 'logging.handlers.RotatingFileHandler',
     'filename': os.path.join(BASE_DIR, 'log/discord_bot.log'),
     'formatter': 'verbose',
     'maxBytes': 1024 * 1024 * 5,
     'backupCount': 5,
 }
-LOGGING['loggers']['aadiscordbot'] = {'handlers': ['bot_log_file'],'level': 'DEBUG'}
+LOGGING['loggers']['aadiscordbot'] = {'handlers': ['bot_log_file'],'level': os.environ.get('AA_LOG_LEVEL', 'INFO')}
 
 DISCORD_BOT_COGS = [
  "aadiscordbot.cogs.about", # about the bot
@@ -285,7 +285,7 @@ KILLTRACKER_QUEUE_ID = "GILDI2750"  # Put your unique queue ID here
 
 SHELL_PLUS = "ipython"
 HEALTH_TOKEN = env('HEALTH_TOKEN')
-LOGGING['handlers']['log_file']['level'] = 'DEBUG'
+LOGGING['handlers']['log_file']['level'] = os.environ.get('AA_LOG_LEVEL', 'INFO')
 
 
 # Temp Fix
