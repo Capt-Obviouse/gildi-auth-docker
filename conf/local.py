@@ -70,9 +70,7 @@ CACHES = {
     }
 }
 
-HEALTH_CHECK = {
-        "REDIS_URL": f"redis://{os.environ.get('AA_REDIS', 'redis:6379')}/0"
-}
+REDIS_URL = f"redis://{os.environ.get('AA_REDIS', 'redis:6379')}/0"
 
 
 

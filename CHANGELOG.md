@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Fix Redis health check - use `REDIS_URL` setting instead of nested `HEALTH_CHECK` dict
+
 ## [0.2.1] - 2025-12-05
 
 ### Added
