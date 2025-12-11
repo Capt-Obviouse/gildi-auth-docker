@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Reduce Celery worker replicas from 2 to 1 to lower memory usage
 - Add Redis memory limit (256MB) and LRU eviction policy to prevent unbounded cache growth
+- Remove local MariaDB in favor of external RDS instance
+- Update Grafana to connect to RDS instead of local MariaDB
 
 ### Fixed
 - Fix Redis health check - use `REDIS_URL` setting instead of nested `HEALTH_CHECK` dict

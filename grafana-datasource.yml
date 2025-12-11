@@ -4,8 +4,8 @@ datasources:
 
 - name: MySQL
   type: mysql
-  url: auth_mysql
-  database: alliance_auth
+  url: ${AA_DB_HOST}
+  database: ${AA_DB_NAME}
   user: grafana
   editable: true
   secureJsonData:
