@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Reduce Celery worker replicas from 2 to 1 to lower memory usage
+- Add Redis memory limit (256MB) and LRU eviction policy to prevent unbounded cache growth
+
 ### Fixed
 - Fix Redis health check - use `REDIS_URL` setting instead of nested `HEALTH_CHECK` dict
 - Fix `AA_LOG_LEVEL` to actually control all loggers (set root logger and console handler)

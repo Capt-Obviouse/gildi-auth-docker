@@ -76,7 +76,7 @@ services:
 
   redis:
     image: redis:8
-    command: redis-server
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
     restart: always
     volumes:
       - "redis-data:/data"
@@ -127,7 +127,7 @@ services:
       "worker_%n"
     ]
     deploy:
-      replicas: 2
+      replicas: 1
 
   aa_discordbot:
     container_name: aa_discordbot
