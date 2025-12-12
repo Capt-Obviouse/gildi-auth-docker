@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix Redis health check - use `REDIS_URL` setting instead of nested `HEALTH_CHECK` dict
 - Fix `AA_LOG_LEVEL` to actually control all loggers (set root logger and console handler)
+- Fix backup script to load env vars before using them
 
 ## [0.2.1] - 2025-12-05
 

@@ -14,15 +14,15 @@ set -euo pipefail
 # Configuration
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
+
+# Load .env file
+if [[ -f "$PROJECT_DIR/.env" ]]; then
+    export $(grep -E '^(AA_DB_ROOT_PASSWORD|AA_DB_NAME|AA_BACKUP_BUCKET|AA_BACKUP_PREFIX|AA_BACKUP_RETENTION_DAYS)=' "$PROJECT_DIR/.env" | xargs)
+fi
+
 BACKUP_BUCKET="${AA_BACKUP_BUCKET:-}"
 BACKUP_PREFIX="${AA_BACKUP_PREFIX:-alliance-auth-backups}"
 RETENTION_DAYS="${AA_BACKUP_RETENTION_DAYS:-7}"
-
-# Load .env file for database credentials
-if [[ -f "$PROJECT_DIR/.env" ]]; then
-    export $(grep -E '^(AA_DB_ROOT_PASSWORD|AA_DB_NAME)=' "$PROJECT_DIR/.env" | xargs)
-fi
-
 DB_NAME="${AA_DB_NAME:-alliance_auth}"
 DB_PASSWORD="${AA_DB_ROOT_PASSWORD:-}"
 TIMESTAMP=$(date +%Y%m%d-%H%M%S)
