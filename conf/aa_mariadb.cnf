@@ -1,6 +1,23 @@
 [mariadb]
-# Provided as an Example
-# AA Doesnt use Aria or MyISAM, So these are worth Considering
+# Memory limits (keep MariaDB footprint small)
+innodb_buffer_pool_size = 128M
+key_buffer_size = 16M
+aria_pagecache_buffer_size = 16M
 
-# aria_pagecache_buffer_size = 16M
-# key_buffer_size = 16M
+# Prevent binary log growth (not needed without replication)
+skip-log-bin
+
+# Limit InnoDB file growth
+innodb_file_per_table = 1
+innodb_autoextend_increment = 8
+
+# Disable general/slow query logs (use only for debugging)
+general_log = 0
+slow_query_log = 0
+
+# Limit temp table sizes
+tmp_table_size = 32M
+max_heap_table_size = 32M
+
+# Connection limits
+max_connections = 50

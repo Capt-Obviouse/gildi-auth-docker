@@ -7,11 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- S3 backup script for MariaDB (`scripts/backup-db.sh`) with configurable retention
+
 ### Changed
 - Reduce Celery worker replicas from 2 to 1 to lower memory usage
 - Add Redis memory limit (256MB) and LRU eviction policy to prevent unbounded cache growth
-- Remove local MariaDB in favor of external RDS instance
-- Update Grafana to connect to RDS instead of local MariaDB
+- Revert to local MariaDB container (from RDS) for cost savings
 
 ### Fixed
 - Fix Redis health check - use `REDIS_URL` setting instead of nested `HEALTH_CHECK` dict
