@@ -31,7 +31,7 @@ x-aa-health-check: &aa-health-checks
     test: [
       "CMD",
       "/memory_check.sh",
-      "500000000"
+      "700000000"
     ]
     interval: 60s
     timeout: 10s

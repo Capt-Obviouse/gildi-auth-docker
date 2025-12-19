@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.7] - 2025-12-19
+
+### Fixed
+- Increase Celery worker memory health check threshold from 500MB to 700MB to prevent frequent restarts causing brief outages
+
+## [0.2.6] - 2025-12-12
+
 ### Added
 - S3 backup script for MariaDB (`scripts/backup-db.sh`) with configurable retention
 
