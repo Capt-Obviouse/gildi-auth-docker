@@ -204,6 +204,7 @@ DISCORD_BOT_COGS = [
  "aadiscordbot.cogs.welcomegoodbye", # Customizable user join/leave messages
  "aadiscordbot.cogs.models", # Populate and Maintain Django Models for Channels and Servers
  "aadiscordbot.cogs.quote", # Save and recall messages
+ "myauth.cogs.reauth_reminder", # Monthly ESI token re-auth reminders
  ]
 
 DISCORD_BOT_TASK_RATE_LIMITS = {
@@ -294,3 +295,11 @@ LOGGING['root'] = {'handlers': ['console'], 'level': AA_LOG_LEVEL}
 
 # Temp Fix
 CT_CHAR_ACTIVE_IGNORE_NOTIFICATIONS_MODULE=True
+
+# Reauth Reminder Cog Settings
+# Monthly reminder to re-authorize ESI tokens for director/CEO level access
+REAUTH_REMINDER_CHANNEL_ID = env('REAUTH_REMINDER_CHANNEL_ID', default=None)
+REAUTH_REMINDER_ROLE_ID = env('REAUTH_REMINDER_ROLE_ID', default=None)
+REAUTH_REMINDER_DAY = env.int('REAUTH_REMINDER_DAY', default=1)  # Day of month (1-28)
+REAUTH_REMINDER_HOUR = env.int('REAUTH_REMINDER_HOUR', default=12)  # Hour in UTC (0-23)
+REAUTH_REMINDER_URL = env('REAUTH_REMINDER_URL', default='/corptools/')  # Path to reauth page

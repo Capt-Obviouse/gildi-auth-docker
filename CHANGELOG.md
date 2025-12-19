@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Reauth reminder Discord bot cog for monthly ESI token re-authorization reminders
+  - Configurable channel, role ping, day of month, and hour
+  - Includes clickable button linking to corptools page
+  - Test command `!testreauth` for admins to preview the message
+
 ## [0.2.7] - 2025-12-19
 
 ### Fixed
