@@ -13,11 +13,16 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 SECRET_KEY = os.environ.get("AA_SECRET_KEY")
 SITE_NAME = os.environ.get("AA_SITENAME")
-SITE_URL = (
-    f"{os.environ.get('PROTOCOL')}"
-    f"{os.environ.get('AUTH_SUBDOMAIN')}."
-    f"{os.environ.get('DOMAIN')}"
-)
+
+# Allow SITE_URL override for local dev, otherwise build from components
+if os.environ.get("SITE_URL"):
+    SITE_URL = os.environ.get("SITE_URL")
+else:
+    SITE_URL = (
+        f"{os.environ.get('PROTOCOL')}"
+        f"{os.environ.get('AUTH_SUBDOMAIN')}."
+        f"{os.environ.get('DOMAIN')}"
+    )
 CSRF_TRUSTED_ORIGINS = [SITE_URL]
 DEBUG = os.environ.get("AA_DEBUG", False)
 DATABASES["default"] = {
@@ -204,6 +209,7 @@ DISCORD_BOT_COGS = [
  "aadiscordbot.cogs.welcomegoodbye", # Customizable user join/leave messages
  "aadiscordbot.cogs.models", # Populate and Maintain Django Models for Channels and Servers
  "aadiscordbot.cogs.quote", # Save and recall messages
+ "myauth.cogs.reauth_reminder", # Monthly ESI token re-auth reminders
  ]
 
 DISCORD_BOT_TASK_RATE_LIMITS = {
@@ -294,3 +300,10 @@ LOGGING['root'] = {'handlers': ['console'], 'level': AA_LOG_LEVEL}
 
 # Temp Fix
 CT_CHAR_ACTIVE_IGNORE_NOTIFICATIONS_MODULE=True
+
+# Reauth Reminder Cog Settings
+# Monthly reminder to re-authorize ESI tokens for director/CEO level access
+REAUTH_REMINDER_CHANNEL_ID = env('REAUTH_REMINDER_CHANNEL_ID', default=None)
+REAUTH_REMINDER_ROLE_ID = env('REAUTH_REMINDER_ROLE_ID', default=None)
+REAUTH_REMINDER_DAY = env.int('REAUTH_REMINDER_DAY', default=1)  # Day of month (1-28)
+REAUTH_REMINDER_HOUR = env.int('REAUTH_REMINDER_HOUR', default=12)  # Hour in UTC (0-23)

@@ -12,6 +12,7 @@ x-aa-base: &aa-base
     - ./conf/local.py:/home/allianceauth/myauth/myauth/settings/local.py
     - ./conf/celery.py:/home/allianceauth/myauth/myauth/celery.py
     - ./conf/urls.py:/home/allianceauth/myauth/myauth/urls.py
+    - ./conf/cogs:/home/allianceauth/myauth/myauth/cogs
     - ./conf/memory_check.sh:/memory_check.sh
     - ./templates:/home/allianceauth/myauth/myauth/templates/
     - static-volume:/var/www/myauth/static
