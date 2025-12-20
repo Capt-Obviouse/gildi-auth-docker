@@ -1,8 +1,21 @@
 [mariadb]
-# Memory limits (keep MariaDB footprint small)
+# Memory limits (keep MariaDB footprint small for 4GB system)
 innodb_buffer_pool_size = 128M
 key_buffer_size = 16M
 aria_pagecache_buffer_size = 16M
+
+# Reduce per-connection memory usage
+sort_buffer_size = 256K
+read_buffer_size = 256K
+read_rnd_buffer_size = 512K
+join_buffer_size = 256K
+thread_stack = 192K
+
+# Reduce InnoDB memory overhead
+innodb_log_buffer_size = 8M
+
+# Disable performance schema (saves ~400MB)
+performance_schema = OFF
 
 # Prevent binary log growth (not needed without replication)
 skip-log-bin

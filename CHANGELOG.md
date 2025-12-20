@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.9] - 2025-12-20
+
+### Changed
+- Reduce gunicorn workers from 3 to 2 to lower memory usage
+- Tune MariaDB for lower memory footprint:
+  - Disable performance_schema (saves ~400MB)
+  - Reduce per-connection buffer sizes
+  - Reduce InnoDB log buffer to 8MB
+
 ## [0.2.8] - 2025-12-20
 
 ### Added
