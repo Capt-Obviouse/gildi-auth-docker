@@ -13,11 +13,16 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 SECRET_KEY = os.environ.get("AA_SECRET_KEY")
 SITE_NAME = os.environ.get("AA_SITENAME")
-SITE_URL = (
-    f"{os.environ.get('PROTOCOL')}"
-    f"{os.environ.get('AUTH_SUBDOMAIN')}."
-    f"{os.environ.get('DOMAIN')}"
-)
+
+# Allow SITE_URL override for local dev, otherwise build from components
+if os.environ.get("SITE_URL"):
+    SITE_URL = os.environ.get("SITE_URL")
+else:
+    SITE_URL = (
+        f"{os.environ.get('PROTOCOL')}"
+        f"{os.environ.get('AUTH_SUBDOMAIN')}."
+        f"{os.environ.get('DOMAIN')}"
+    )
 CSRF_TRUSTED_ORIGINS = [SITE_URL]
 DEBUG = os.environ.get("AA_DEBUG", False)
 DATABASES["default"] = {
@@ -302,4 +307,3 @@ REAUTH_REMINDER_CHANNEL_ID = env('REAUTH_REMINDER_CHANNEL_ID', default=None)
 REAUTH_REMINDER_ROLE_ID = env('REAUTH_REMINDER_ROLE_ID', default=None)
 REAUTH_REMINDER_DAY = env.int('REAUTH_REMINDER_DAY', default=1)  # Day of month (1-28)
 REAUTH_REMINDER_HOUR = env.int('REAUTH_REMINDER_HOUR', default=12)  # Hour in UTC (0-23)
-REAUTH_REMINDER_URL = env('REAUTH_REMINDER_URL', default='/corptools/')  # Path to reauth page

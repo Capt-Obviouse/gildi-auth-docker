@@ -1,4 +1,14 @@
+# Environment files (contain secrets)
 .env
+.env.*
+!.env.example
+
+# Local development overrides
+docker-compose.override.yml
+
+# Database
 setup.sql
 mysql-data/*
+
+# Claude Code
 .claude/settings.local.json

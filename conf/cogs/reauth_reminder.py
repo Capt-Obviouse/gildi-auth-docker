@@ -9,7 +9,6 @@ Configuration (in local.py):
     REAUTH_REMINDER_ROLE_ID: (Optional) Role ID to ping
     REAUTH_REMINDER_DAY: Day of month to send reminder (default: 1)
     REAUTH_REMINDER_HOUR: Hour to send reminder in UTC (default: 12)
-    REAUTH_REMINDER_URL: URL path for reauth (default: /corptools/)
 """
 
 import logging
@@ -22,17 +21,25 @@ from django.conf import settings
 logger = logging.getLogger(__name__)
 
 
-class ReauthButton(discord.ui.View):
-    """A view containing a button that links to the auth page."""
+class ReauthButtons(discord.ui.View):
+    """A view containing buttons that link to the auth pages."""
 
-    def __init__(self, auth_url: str):
+    def __init__(self, site_url: str):
         super().__init__(timeout=None)
         self.add_item(
             discord.ui.Button(
-                label="Re-authorize Characters",
+                label="Corp Audit Tokens",
                 style=discord.ButtonStyle.link,
-                url=auth_url,
-                emoji="\U0001F510",  # Lock emoji
+                url=f"{site_url}/audit/r/corp",
+                emoji="\U0001F4CA",  # Chart emoji
+            )
+        )
+        self.add_item(
+            discord.ui.Button(
+                label="Structure Owners",
+                style=discord.ButtonStyle.link,
+                url=f"{site_url}/structures/",
+                emoji="\U0001F3D7",  # Building emoji
             )
         )
 
@@ -52,14 +59,13 @@ class ReauthReminder(commands.Cog):
     def get_config(self):
         """Get configuration from Django settings with defaults."""
         site_url = getattr(settings, "SITE_URL", "https://auth.example.com")
-        reauth_path = getattr(settings, "REAUTH_REMINDER_URL", "/corptools/")
 
         return {
             "channel_id": getattr(settings, "REAUTH_REMINDER_CHANNEL_ID", None),
             "role_id": getattr(settings, "REAUTH_REMINDER_ROLE_ID", None),
             "day": getattr(settings, "REAUTH_REMINDER_DAY", 1),
             "hour": getattr(settings, "REAUTH_REMINDER_HOUR", 12),
-            "auth_url": f"{site_url}{reauth_path}",
+            "site_url": site_url,
         }
 
     @tasks.loop(hours=1)
@@ -87,14 +93,29 @@ class ReauthReminder(commands.Cog):
         role_ping = f"<@&{config['role_id']}>" if config["role_id"] else ""
 
         embed = discord.Embed(
-            title="\U0001F514 Monthly Token Reminder",
+            title="\U0001F514 Monthly Director/CEO Token Reminder",
             description=(
-                "Please ensure your ESI tokens are up to date!\n\n"
-                "If you have **director** or **CEO** roles, your tokens may need "
-                "re-authorization to keep corp auditing and tracking tools working properly.\n\n"
-                "Click the button below to check and refresh your character authorizations."
+                "If you have **director** or **CEO** roles in-game, please ensure "
+                "your ESI tokens are up to date to keep our corp tools working!\n\n"
             ),
             color=discord.Color.gold(),
+        )
+        embed.add_field(
+            name="\U0001F4CA Corp Audit Tokens",
+            value=(
+                "Click **Add Token** and select your director character.\n"
+                "Enable: Structures, Starbases, Assets, Moons, Wallets, "
+                "Member Tracking, Contracts, Industry Jobs"
+            ),
+            inline=False,
+        )
+        embed.add_field(
+            name="\U0001F3D7 Structure Owners",
+            value=(
+                "Click **Add Owner** and select your director/CEO character "
+                "to enable structure tracking and notifications."
+            ),
+            inline=False,
         )
         embed.set_footer(text="This is an automated monthly reminder")
 
@@ -102,7 +123,7 @@ class ReauthReminder(commands.Cog):
             await channel.send(
                 content=role_ping if role_ping else None,
                 embed=embed,
-                view=ReauthButton(config["auth_url"]),
+                view=ReauthButtons(config["site_url"]),
             )
             logger.info(f"ReauthReminder: Sent monthly reminder to channel {config['channel_id']}")
         except discord.DiscordException as e:
@@ -130,20 +151,35 @@ class ReauthReminder(commands.Cog):
             return
 
         embed = discord.Embed(
-            title="\U0001F514 Monthly Token Reminder (TEST)",
+            title="\U0001F514 Monthly Director/CEO Token Reminder (TEST)",
             description=(
-                "Please ensure your ESI tokens are up to date!\n\n"
-                "If you have **director** or **CEO** roles, your tokens may need "
-                "re-authorization to keep corp auditing and tracking tools working properly.\n\n"
-                "Click the button below to check and refresh your character authorizations."
+                "If you have **director** or **CEO** roles in-game, please ensure "
+                "your ESI tokens are up to date to keep our corp tools working!\n\n"
             ),
             color=discord.Color.gold(),
+        )
+        embed.add_field(
+            name="\U0001F4CA Corp Audit Tokens",
+            value=(
+                "Click **Add Token** and select your director character.\n"
+                "Enable: Structures, Starbases, Assets, Moons, Wallets, "
+                "Member Tracking, Contracts, Industry Jobs"
+            ),
+            inline=False,
+        )
+        embed.add_field(
+            name="\U0001F3D7 Structure Owners",
+            value=(
+                "Click **Add Owner** and select your director/CEO character "
+                "to enable structure tracking and notifications."
+            ),
+            inline=False,
         )
         embed.set_footer(text="This is a TEST message - not a real reminder")
 
         await channel.send(
             embed=embed,
-            view=ReauthButton(config["auth_url"]),
+            view=ReauthButtons(config["site_url"]),
         )
         await ctx.send(f"Test reminder sent to <#{config['channel_id']}>")
 

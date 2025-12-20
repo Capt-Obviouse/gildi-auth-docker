@@ -7,11 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.8] - 2025-12-20
+
 ### Added
-- Reauth reminder Discord bot cog for monthly ESI token re-authorization reminders
-  - Configurable channel, role ping, day of month, and hour
-  - Includes clickable button linking to corptools page
-  - Test command `!testreauth` for admins to preview the message
+- Reauth reminder Discord bot cog for monthly director/CEO ESI token reminders
+  - Sends monthly reminder to a configured Discord channel
+  - Two buttons: "Corp Audit Tokens" (`/audit/r/corp`) and "Structure Owners" (`/structures/`)
+  - Configurable: channel ID, role ping, day of month, and hour (UTC)
+  - Admin test command `!testreauth` to preview the message
+  - Environment variables: `REAUTH_REMINDER_CHANNEL_ID`, `REAUTH_REMINDER_ROLE_ID`, `REAUTH_REMINDER_DAY`, `REAUTH_REMINDER_HOUR`
 
 ## [0.2.7] - 2025-12-19
 
