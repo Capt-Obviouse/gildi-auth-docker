@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-01-28
+
+### Changed
+- Migrate database from local MariaDB container to external Hetzner MySQL server
+  - Reduces memory usage on app server by ~750MB
+  - Database now hosted on dedicated cpx11 server in Ashburn, VA
+- Add dynamic database engine support (MySQL/PostgreSQL) via `AA_DB_ENGINE` env var
+- Add psycopg2-binary to requirements for PostgreSQL compatibility
+
 ## [0.2.9] - 2025-12-20
 
 ### Changed
