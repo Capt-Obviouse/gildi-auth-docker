@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Enable Redis cache compression using LZMA compressor for reduced memory usage
+- Add `MEMBERAUDIT_DATA_RETENTION_LIMIT = 90` to automatically purge mail/contract history older than 90 days
+
+### Fixed
+- Add `profiles: ["cli"]` to aa_cli container so it doesn't start with `docker compose up`
+- Database performance optimization: removed 1,059 orphaned characters (no ownership record) and their associated data
+  - Deleted ~6.4M old notifications (older than 90 days)
+  - Deleted ~1.2M wallet journal entries, ~1.2M contract items, ~825K assets from orphaned characters
+  - Database size reduced from ~4.5GB to ~2.3GB
+- Added `skip-name-resolve = 1` to MySQL config for faster connection handling
+
 ## [0.3.0] - 2026-01-28
 
 ### Changed

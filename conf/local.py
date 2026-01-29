@@ -72,6 +72,9 @@ CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": f"redis://{os.environ.get('AA_REDIS', 'redis:6379')}/1",  # change the 1 here to change the database used
+        "OPTIONS": {
+            "COMPRESSOR": "django_redis.compressors.lzma.LzmaCompressor",
+        }
     }
 }
 
@@ -264,6 +267,8 @@ CELERYBEAT_SCHEDULE['memberaudit_run_regular_updates'] = {
     'task': 'memberaudit.tasks.run_regular_updates',
     'schedule': crontab(minute=0, hour='*/1'),
 }
+# Keep 90 days of mail/contract history (character vetting data retained separately)
+MEMBERAUDIT_DATA_RETENTION_LIMIT = 90
 
 # Inactivity
 CELERYBEAT_SCHEDULE['inactivity_check_inactivity'] = {

@@ -140,6 +140,7 @@ services:
   aa_cli:
     <<: *aa-base
     container_name: aa_cli
+    profiles: ["cli"]  # Only start with: docker compose run --rm aa_cli <command>
     # use the Dockerfile entrypoint ["sh", "-c"] and provide a command:
     entrypoint: ["python", "manage.py"]
     depends_on:
