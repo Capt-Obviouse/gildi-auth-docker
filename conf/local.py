@@ -25,32 +25,17 @@ else:
     )
 CSRF_TRUSTED_ORIGINS = [SITE_URL]
 DEBUG = os.environ.get("AA_DEBUG", False)
-# Database configuration - supports MySQL and PostgreSQL
-_db_engine = os.environ.get("AA_DB_ENGINE", "mysql")
-if _db_engine == "postgresql":
-    DATABASES["default"] = {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("AA_DB_NAME"),
-        "USER": os.environ.get("AA_DB_USER"),
-        "PASSWORD": os.environ.get("AA_DB_PASSWORD"),
-        "HOST": os.environ.get("AA_DB_HOST"),
-        "PORT": os.environ.get("AA_DB_PORT", "5432"),
-        "OPTIONS": {
-            "sslmode": os.environ.get("AA_DB_SSLMODE", "require"),
-        }
+DATABASES["default"] = {
+    "ENGINE": "django.db.backends.mysql",
+    "NAME": os.environ.get("AA_DB_NAME"),
+    "USER": os.environ.get("AA_DB_USER"),
+    "PASSWORD": os.environ.get("AA_DB_PASSWORD"),
+    "HOST": os.environ.get("AA_DB_HOST"),
+    "PORT": os.environ.get("AA_DB_PORT", "3306"),
+    "OPTIONS": {
+        "charset": os.environ.get("AA_DB_CHARSET", "utf8mb4")
     }
-else:
-    DATABASES["default"] = {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": os.environ.get("AA_DB_NAME"),
-        "USER": os.environ.get("AA_DB_USER"),
-        "PASSWORD": os.environ.get("AA_DB_PASSWORD"),
-        "HOST": os.environ.get("AA_DB_HOST"),
-        "PORT": os.environ.get("AA_DB_PORT", "3306"),
-        "OPTIONS": {
-            "charset": os.environ.get("AA_DB_CHARSET", "utf8mb4")
-        }
-    }
+}
 
 # Register an application at https://developers.eveonline.com for Authentication
 # & API Access and fill out these settings. Be sure to set the callback URL
