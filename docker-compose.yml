@@ -17,8 +17,10 @@ x-aa-base: &aa-base
     - ./templates:/home/allianceauth/myauth/myauth/templates/
     - static-volume:/var/www/myauth/static
   depends_on:
-    - redis
-    - auth_mysql
+    redis:
+      condition: service_healthy
+    auth_mysql:
+      condition: service_healthy
   working_dir: /home/allianceauth/myauth/
   stop_grace_period: 10m
   logging:
@@ -142,8 +144,10 @@ services:
     # use the Dockerfile entrypoint ["sh", "-c"] and provide a command:
     entrypoint: ["python", "manage.py"]
     depends_on:
-      - redis
-      - auth_mysql
+      redis:
+        condition: service_healthy
+      auth_mysql:
+        condition: service_healthy
 
   grafana:
     image: grafana/grafana-oss:latest
