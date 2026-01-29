@@ -146,25 +146,25 @@ services:
       redis:
         condition: service_healthy
 
-  grafana:
-    image: grafana/grafana-oss:latest
-    restart: always
-    # depends_on auth_mysql removed - using external database
-    volumes:
-      - ./grafana-datasource.yml:/etc/grafana/provisioning/datasources/datasource.yaml
-      - ./grafana-dashboards.yml:/etc/grafana/provisioning/dashboards/datasource.yaml
-      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
-      - grafana-data:/var/lib/grafana
-    environment:
-      GF_INSTALL_PLUGINS: grafana-piechart-panel,grafana-clock-panel,grafana-simple-json-datasource
-      GF_SECURITY_ADMIN_USERNAME: ${GF_SECURITY_ADMIN_USERNAME}
-      GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD}
-      GF_AUTH_DATABASE_PASSWORD: ${GRAFANA_DB_PASSWORD}
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10Mb"
-        max-file: "5"
+  # Grafana disabled to save memory
+  # grafana:
+  #   image: grafana/grafana-oss:latest
+  #   restart: always
+  #   volumes:
+  #     - ./grafana-datasource.yml:/etc/grafana/provisioning/datasources/datasource.yaml
+  #     - ./grafana-dashboards.yml:/etc/grafana/provisioning/dashboards/datasource.yaml
+  #     - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+  #     - grafana-data:/var/lib/grafana
+  #   environment:
+  #     GF_INSTALL_PLUGINS: grafana-piechart-panel,grafana-clock-panel,grafana-simple-json-datasource
+  #     GF_SECURITY_ADMIN_USERNAME: ${GF_SECURITY_ADMIN_USERNAME}
+  #     GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD}
+  #     GF_AUTH_DATABASE_PASSWORD: ${GRAFANA_DB_PASSWORD}
+  #   logging:
+  #     driver: "json-file"
+  #     options:
+  #       max-size: "10Mb"
+  #       max-file: "5"
 
   proxy:
     image: jc21/nginx-proxy-manager:latest
